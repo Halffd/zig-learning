@@ -1,21 +1,14 @@
 const std = @import("std");
 
-pub fn main() !void {
-    var notas: [10]f64 = undefined;
-    var soma: f64 = 0.0;
-    const stdin = std.io.getStdIn().reader();
-    const stdout = std.io.getStdOut().writer();
-    var buffer: [1024]u8 = undefined;
+pub fn main() void {
+    var dummy_int: i32 = 0;
+    var dummy_float: f32 = 0.0;
 
-    for (0..10) |i| {
-        try stdout.print("Digite a {d}ª. nota: ", .{i + 1});
-        const input = (try stdin.readUntilDelimiterOrEof(&buffer, '\n')) orelse return error.InvalidInput;
-        const trimmed_input = std.mem.trim(u8, input, &std.ascii.whitespace);
-        const nota = try std.fmt.parseFloat(f64, trimmed_input);
-        notas[i] = nota;
-        soma += nota;
-    }
+    // Changed from var to const since we're not modifying the pointers
+    const p: *i32 = &dummy_int;
+    const ptr1: *f32 = &dummy_float;
+    const ptr2: *f32 = &dummy_float;
 
-    const media = soma / 10.0;
-    try stdout.print("A média dos alunos é : {d:.2}\n", .{media});
+    std.debug.print("Pointer values:\n", .{});
+    std.debug.print("p: {*}\nptr1: {*}\nptr2: {*}\n", .{p, ptr1, ptr2});
 }
